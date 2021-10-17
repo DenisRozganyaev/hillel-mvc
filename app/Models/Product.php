@@ -24,6 +24,16 @@ class Product extends Model
         'thumbnail'
     ];
 
+    protected $hidden = [
+      'created_at',
+      'updated_at'
+    ];
+
+    public function scopeAvailable()
+    {
+        return $this->where('in_stock', '>', 0);
+    }
+
     public function gallery()
     {
         return $this->hasMany(ProductImage::class);

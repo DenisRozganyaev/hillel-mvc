@@ -17,7 +17,11 @@ class IsAdmin
     public function handle(Request $request, Closure $next)
     {
         if(!is_admin($request->user())) {
-            return redirect('/');
+            if (! $request->expectsJson()) {
+                return redirect('/');
+            } else {
+                return response()->json(['message' => 'You do not have an admin role'], 403);
+            }
         }
 
         return $next($request);

@@ -17,7 +17,7 @@ class HomeController extends Controller
     public function index()
     {
         $categories = Category::all()->take(5);
-        $products = Product::all()->take(5);
+        $products = Product::available()->get()->take(5);
 
         // ['categories' => $categories, 'products' => $products]
         return view('home', compact('categories', 'products'));

@@ -14,6 +14,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::namespace('api')->group(function() {
+
+    Route::post('login', 'AuthController@login')->name('login');
+
+    Route::namespace('v1')->prefix('v1')->group(function() {
+        Route::get('products/{product}', 'ProductsController@show')->name('products.show');
+
+
+        Route::group(['middleware' => ['auth:sanctum']], function() {
+            Route::get('products', 'ProductsController@index')->name('products');
+
+            Route::group(['middleware' => ['admin']], function() {
+                Route::post('categories', 'CategoriesController@create')->name('categories.create');
+            });
+
+        });
+    });
+
 });
