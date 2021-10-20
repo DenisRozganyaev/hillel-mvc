@@ -1,4 +1,5 @@
 @extends('layouts.app')
+
 @section('content')
     @include('account.parts.nav')
     <div class="container">

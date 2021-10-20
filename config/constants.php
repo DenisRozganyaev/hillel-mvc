@@ -8,7 +8,8 @@ return [
         'order_status' => [
             'in_process' => 'In process',
             'paid' => 'Paid',
-            'completed' => 'Completed'
+            'completed' => 'Completed',
+            'canceled' => 'Canceled'
         ]
     ]
 ];

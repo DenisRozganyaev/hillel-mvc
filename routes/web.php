@@ -60,6 +60,12 @@ Route::namespace('Account')->prefix('account')->name('account.')->middleware(['a
     Route::put('{user}', 'UserController@update')->middleware('can:update,user')->name('update');
 
     Route::get('wishlist', 'WishListController@index')->name('wishlist');
+
+    Route::name('orders')->group(function() {
+       Route::get('orders', 'OrdersController@index')->name('.list');
+       Route::get('orders/{order}', 'OrdersController@show')->middleware('can:show,order')->name('.show');
+       Route::post('orders/{order}/cancel', 'OrdersController@cancel')->name('.cancel');
+    });
 });
 
 Route::middleware('auth')->group(function() {
