@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\Order;
 use App\Models\User;
 use App\Notifications\OrderCreatedNotification;
 use Illuminate\Bus\Queueable;
@@ -15,17 +16,17 @@ class OrderCreatedNotificationJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $user, $orderId;
+    protected $user, $order;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(User $user, int $orderId)
+    public function __construct(User $user, Order $order)
     {
         $this->user = $user;
-        $this->orderId = $orderId;
+        $this->order = $order;
     }
 
     /**
@@ -35,6 +36,6 @@ class OrderCreatedNotificationJob implements ShouldQueue
      */
     public function handle()
     {
-        $this->user->notify(new OrderCreatedNotification($this->user, $this->orderId));
+        $this->order->notify(new OrderCreatedNotification($this->user, $this->order->id));
     }
 }

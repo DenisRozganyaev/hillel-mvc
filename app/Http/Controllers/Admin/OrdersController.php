@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Order;
 use App\Models\OrderStatus;
 use App\Models\Product;
@@ -24,5 +25,12 @@ class OrdersController extends Controller
         $statuses = OrderStatus::all();
         $products = $order->products()->get();
         return view('admin/orders/edit', compact('order', 'products', 'statuses'));
+    }
+
+    public function update(UpdateOrderRequest $request, Order $order)
+    {
+        $order->update($request->validated());
+
+        return redirect()->back()->with(['session' => 'Order was updated!']);
     }
 }

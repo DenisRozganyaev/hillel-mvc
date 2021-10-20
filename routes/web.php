@@ -40,6 +40,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware(['auth', 
     Route::name('orders')->group(function () {
         Route::get('orders', 'OrdersController@index');
         Route::get('orders/{order}/edit', 'OrdersController@edit')->name('.edit');
+        Route::put('orders/{order}', 'OrdersController@update')->name('.update');
     });
 
     Route::name('products')->group(function () {

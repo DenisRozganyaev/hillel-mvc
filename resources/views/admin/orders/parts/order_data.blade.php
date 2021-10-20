@@ -12,7 +12,7 @@
 <div class="form-group row">
     <label for="order_status" class="col-md-4 col-form-label text-md-right">{{ __('Order Status') }}</label>
     <div class="col-md-6">
-        <select name="order_status" id="order_status" class="form-control">
+        <select name="status_id" id="order_status" class="form-control">
             @foreach($statuses as $status)
                 <option value="{{ $status->id }}"
                         {{ ($status->id === $order->status_id ? 'selected' : '') }}

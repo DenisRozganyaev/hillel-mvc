@@ -15,8 +15,10 @@
                 @endif
             </div>
             <div class="col-md-6">
-                <form action="" method="POST">
+                <form action="{{ route('admin.orders.update', $order) }}" method="POST">
                     @csrf
+                    @method('PUT')
+
                     @include('admin.orders.parts.order_data', ['order' => $order, 'statuses' => $statuses])
                     @include('admin.orders.parts.user_data', ['order' => $order])
                     @include('admin.orders.parts.delivery_data', ['order' => $order])
