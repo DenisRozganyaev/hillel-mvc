@@ -20,7 +20,8 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.3",
         "predis/predis": "^1.1",
-        "willvincent/laravel-rateable": "^2.3.0"
+        "willvincent/laravel-rateable": "^2.3.0",
+        "kyslik/column-sortable": "^6.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

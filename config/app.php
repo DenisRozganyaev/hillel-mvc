@@ -178,6 +178,7 @@ return [
         App\Providers\ImageServiceProvider::class,
         App\Providers\OrderRepositoryServiceProvider::class,
         App\Providers\WishListProvider::class,
+        Kyslik\ColumnSortable\ColumnSortableServiceProvider::class,
     ],
 
     /*

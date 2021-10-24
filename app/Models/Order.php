@@ -5,10 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Kyslik\ColumnSortable\Sortable;
 
 class Order extends Model
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, Sortable;
+
+    public $sortable = [
+        'status_id',
+        'created_at',
+        'total'
+    ];
 
     protected $fillable = [
         'status_id',

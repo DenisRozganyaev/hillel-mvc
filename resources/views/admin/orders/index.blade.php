@@ -19,9 +19,9 @@
                         <th class="text-center" scope="col">ID</th>
                         <th class="text-center" scope="col">User</th>
                         <th class="text-center" scope="col">Email</th>
-                        <th class="text-center" scope="col">Status</th>
-                        <th class="text-center" scope="col">Created At</th>
-                        <th class="text-center" scope="col">Total Price</th>
+                        <th class="text-center" scope="col">@sortablelink('status_id', 'Status')</th>
+                        <th class="text-center" scope="col">@sortablelink('created_at', 'Created At')</th>
+                        <th class="text-center" scope="col" style="padding: 0.5rem;">@sortablelink('total', 'Total Price')</th>
                         <th class="text-center" scope="col">Actions</th>
                     </tr>
                     </thead>
