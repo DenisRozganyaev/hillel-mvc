@@ -28,6 +28,8 @@ class Order extends Model
         'city',
         'address',
         'total',
+        'vendor_order_id',
+        'transaction_id'
     ];
 
     public function user()

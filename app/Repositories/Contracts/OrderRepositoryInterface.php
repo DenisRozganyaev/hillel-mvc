@@ -6,5 +6,5 @@ use Illuminate\Http\Request;
 
 interface OrderRepositoryInterface
 {
-    public function create(Request $request): Order;
+    public function create(array $request): Order;
 }

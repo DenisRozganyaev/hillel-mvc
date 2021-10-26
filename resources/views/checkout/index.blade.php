@@ -10,7 +10,7 @@
                 @endif
             </div>
             <div class="col-md-8">
-                <form action="{{ route('order.create') }}" method="POST">
+                <form id="order-form">
                     @csrf
                     <div class="form-group row">
                         <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
@@ -63,11 +63,11 @@
                             <input id="address" type="text" class="form-control @error('address') is-invalid @enderror" name="address" value="{{ old('address') }}">
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <div class="col-md-10 text-right">
-                            <input type="submit" class="btn btn-info" value="Create Order">
-                        </div>
-                    </div>
+{{--                    <div class="form-group row">--}}
+{{--                        <div class="col-md-10 text-right">--}}
+{{--                            <input type="submit" class="btn btn-info" value="Create Order">--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
                 </form>
             </div>
             <div class="col-md-4">
@@ -119,6 +119,10 @@
                     </tr>
                     </tbody>
                 </table>
+                <br>
+                <div class="col-12">
+                    @include('checkout.payments.paypal')
+                </div>
             </div>
         </div>
     </div>

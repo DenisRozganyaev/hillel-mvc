@@ -14,14 +14,15 @@
         "fruitcake/laravel-cors": "^2.0",
         "fzaninotto/faker": "^1.9",
         "guzzlehttp/guzzle": "^7.0.1",
+        "kyslik/column-sortable": "^6.0",
         "laravel/framework": "^8.54",
         "laravel/horizon": "^5.7",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.3",
         "predis/predis": "^1.1",
-        "willvincent/laravel-rateable": "^2.3.0",
-        "kyslik/column-sortable": "^6.0"
+        "srmklive/paypal": "~3.0",
+        "willvincent/laravel-rateable": "^2.3.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

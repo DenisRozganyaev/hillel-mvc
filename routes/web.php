@@ -84,3 +84,8 @@ Route::middleware('auth')->group(function() {
     Route::post('rating/{product}/add', 'RatingController@add')->name('rating.add');
 });
 
+Route::namespace('Payments')->prefix('paypal')->group(function() {
+   Route::post('order/create', 'PaypalPaymentController@create');
+   Route::post('order/{orderId}/capture', 'PaypalPaymentController@capture');
+});
+

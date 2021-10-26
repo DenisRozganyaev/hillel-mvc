@@ -33,4 +33,13 @@ class CreateOrderRequest extends FormRequest
             'address' => 'required|min:2'
         ];
     }
+
+    public function all($keys = null)
+    {
+        if (empty($keys)) {
+            return parent::json()->all();
+        }
+
+        return collect(parent::json()->all())->only($keys)->toArray();
+    }
 }

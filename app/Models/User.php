@@ -57,6 +57,11 @@ class User extends Authenticatable
         return $this->hasMany(Order::class);
     }
 
+    public function transactions()
+    {
+        return $this->belongsToMany(\App\Models\Transaction::class);
+    }
+
     public function instanceCartName()
     {
         $userName = [
@@ -91,4 +96,5 @@ class User extends Authenticatable
     {
         return $this->name . ' ' . $this->surname;
     }
+
 }
