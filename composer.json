@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.3|^8.0",
         "ext-xdebug": "*",
+        "appslabke/lara-izitoast": "^1.1",
         "bumbummen99/shoppingcart": "^4.0.0",
         "fruitcake/laravel-cors": "^2.0",
         "fzaninotto/faker": "^1.9",

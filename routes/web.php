@@ -87,5 +87,6 @@ Route::middleware('auth')->group(function() {
 Route::namespace('Payments')->prefix('paypal')->group(function() {
    Route::post('order/create', 'PaypalPaymentController@create');
    Route::post('order/{orderId}/capture', 'PaypalPaymentController@capture');
+   Route::get('order/{orderId}/thankyou', 'PaypalPaymentController@thankYou')->middleware('auth');
 });
 

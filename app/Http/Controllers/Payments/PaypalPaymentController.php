@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Payments;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateOrderRequest;
+use App\Models\Order;
+use App\Models\Transaction;
 use App\Repositories\Contracts\OrderRepositoryInterface;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
@@ -46,17 +48,37 @@ class PaypalPaymentController extends Controller
         return response()->json($order);
     }
 
-    public function capture(Request $request, string $orderId)
+    public function capture(string $orderId, OrderRepositoryInterface $orderRepository)
     {
         DB::beginTransaction();
         try {
             $result = $this->paypalClient->capturePaymentOrder($orderId);
 
+            if($result['status'] === 'COMPLETED') {
+                $transaction = new Transaction;
+                $transaction->vendor_order_id = $result['id'];
+                $transaction->payment_system = 'PAYPAL';
+                $transaction->user_id = auth()->user()->id;
+                $transaction->status = $result['status'];
+                $transaction->save();
+
+                $orderRepository->setTransaction($result['id'], $transaction);
+            }
             DB::commit();
+
+            return response()->json($result);
         } catch (\Exception $e) {
             DB::rollBack();
-            dd($e);
+            return response()->json(['error' => $e->getMessage()], 422);
         }
-        dd($result);
+    }
+
+    public function thankYou(string $orderId)
+    {
+        Cart::instance('cart')->destroy();
+
+        $order = Order::with(['user', 'transaction', 'products'])->where('vendor_order_id', $orderId)->first();
+
+        return view('thankyou/summary', compact('order'));
     }
 }

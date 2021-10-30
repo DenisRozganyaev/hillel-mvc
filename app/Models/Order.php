@@ -47,6 +47,11 @@ class Order extends Model
         return $this->belongsTo(OrderStatus::class);
     }
 
+    public function transaction()
+    {
+        return $this->belongsTo(Transaction::class);
+    }
+
     public function getOrderTaxAttribute()
     {
         $products = $this->products()->get();

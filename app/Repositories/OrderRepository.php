@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Order;
 use App\Models\OrderStatus;
+use App\Models\Transaction;
 use App\Repositories\Contracts\OrderRepositoryInterface;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
@@ -31,6 +32,16 @@ class OrderRepository implements OrderRepositoryInterface
         });
 
         return $result;
+    }
+
+    public function setTransaction(string $transaction_order_id, Transaction $transaction)
+    {
+        $order = Order::where('vendor_order_id', $transaction_order_id)->first();
+
+        if ($order) {
+            $order->transaction_id = $transaction->id;
+            $order->save();
+        }
     }
 
     private function addProductsToOrder(Order $order)

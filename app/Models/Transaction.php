@@ -21,4 +21,9 @@ class Transaction extends Model
     {
         return $this->hasOne(\App\Models\User::class);
     }
+
+    public function order()
+    {
+        return $this->hasOne(Order::class);
+    }
 }
