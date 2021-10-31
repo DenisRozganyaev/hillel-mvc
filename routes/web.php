@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,14 +13,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes();
-//
-//Route::get('test', function() {
-//    LogInfoJob::dispatch('test job');
-//    LogInfoJob::dispatch('test job 5')->delay(5);
-//    LogInfoJob::dispatch('test job 10')->delay(10);
-//    LogInfoJob::dispatch('test job 15')->delay(15);
-//    LogInfoJob::dispatch('test job 20')->delay(20);
-//});
 
 Route::get('/', 'HomeController@index')->name('home');
 
@@ -66,6 +57,8 @@ Route::namespace('Account')->prefix('account')->name('account.')->middleware(['a
        Route::get('orders/{order}', 'OrdersController@show')->middleware('can:show,order')->name('.show');
        Route::post('orders/{order}/cancel', 'OrdersController@cancel')->name('.cancel');
     });
+
+    Route::get('telegram/callback', 'TelegramCallbackController')->name('telegram.callback');
 });
 
 Route::middleware('auth')->group(function() {

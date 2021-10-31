@@ -5,8 +5,13 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
+                <br>
                 <h3 class="text-center">{{ __('My Account ('. Auth::user()->name .' ' . Auth::user()->surname. ')') }}</h3>
+                <br>
             </div>
+            @empty($user->telegram_user_id)
+                @include('account.parts.telegram')
+            @endempty
             <div class="col-md-12">
                 <div class="album py-5 bg-light">
                     <div class="container">
