@@ -1,5 +1,11 @@
 <?php
+
+use App\Models\Order;
+use App\Services\InvoicesService;
 use Illuminate\Support\Facades\Route;
+use LaravelDaily\Invoices\Classes\Buyer;
+use LaravelDaily\Invoices\Classes\InvoiceItem;
+use LaravelDaily\Invoices\Facades\Invoice;
 
 /*
 |--------------------------------------------------------------------------
@@ -11,6 +17,16 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('test', function() {
+    $service = new InvoicesService();
+    $pdf = $service->generate(Order::find(33))->save();
+
+    $file = $pdf->url();
+
+//    $order->user()->notify();
+    dd($file);
+});
 
 Auth::routes();
 
@@ -32,6 +48,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware(['auth', 
         Route::get('orders', 'OrdersController@index');
         Route::get('orders/{order}/edit', 'OrdersController@edit')->name('.edit');
         Route::put('orders/{order}', 'OrdersController@update')->name('.update');
+        Route::get('orders/{order}/invoice', 'InvoicesController@show')->name('.invoice');
     });
 
     Route::name('products')->group(function () {
@@ -56,6 +73,7 @@ Route::namespace('Account')->prefix('account')->name('account.')->middleware(['a
        Route::get('orders', 'OrdersController@index')->name('.list');
        Route::get('orders/{order}', 'OrdersController@show')->middleware('can:show,order')->name('.show');
        Route::post('orders/{order}/cancel', 'OrdersController@cancel')->name('.cancel');
+       Route::get('orders/{order}/invoice', 'InvoicesController@show')->name('.invoice');
     });
 
     Route::get('telegram/callback', 'TelegramCallbackController')->name('telegram.callback');
@@ -75,6 +93,7 @@ Route::middleware('auth')->group(function() {
     Route::post('order', 'OrdersController@store')->name('order.create');
 
     Route::post('rating/{product}/add', 'RatingController@add')->name('rating.add');
+    Route::get('orders/{order}/invoice', 'InvoicesController')->name('orders.generate.invoice');
 });
 
 Route::namespace('Payments')->prefix('paypal')->group(function() {
@@ -82,4 +101,3 @@ Route::namespace('Payments')->prefix('paypal')->group(function() {
    Route::post('order/{orderId}/capture', 'PaypalPaymentController@capture');
    Route::get('order/{orderId}/thankyou', 'PaypalPaymentController@thankYou')->middleware('auth');
 });
-

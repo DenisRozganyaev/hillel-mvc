@@ -180,6 +180,7 @@ return [
         App\Providers\WishListProvider::class,
         Kyslik\ColumnSortable\ColumnSortableServiceProvider::class,
         LaraIzitoast\LaraIzitoastServiceProvider::class,
+        App\Providers\InvoicesServiceProvider::class,
     ],
 
     /*

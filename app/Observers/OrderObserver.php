@@ -13,7 +13,7 @@ class OrderObserver
     {
         OrderCreatedNotificationJob::dispatch($order->user()->first(), $order)->onQueue('email');
         $admin = User::where('role_id', '=', 1)->first();
-        OrderCreatedNotificationJob::dispatch($admin, $order)->onQueue('email')->delay(60);
+        OrderCreatedNotificationJob::dispatch($admin, $order)->onQueue('email'); //->delay(60);
     }
 
     public function updated(Order $order)

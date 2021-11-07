@@ -4,10 +4,13 @@ namespace App\Notifications;
 
 use App\Mail\Orders\Created\Admin;
 use App\Mail\Orders\Created\Customer;
+use App\Models\Order;
+use App\Services\InvoicesService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use NotificationChannels\Telegram\TelegramFile;
 use NotificationChannels\Telegram\TelegramMessage;
 
 class OrderCreatedNotification extends Notification
@@ -36,8 +39,8 @@ class OrderCreatedNotification extends Notification
     public function via($notifiable)
     {
         return !is_admin($this->user) && !empty($this->user->telegram_user_id)
-            ? ['mail', 'telegram']
-            : ['mail'];
+            ? ['telegram']
+            : [];
     }
 
     /**
@@ -54,14 +57,22 @@ class OrderCreatedNotification extends Notification
 
     public function toTelegram($notifiable)
     {
-        return TelegramMessage::create()
+        logs()->info('INIT::toTelegram');
+        $service = new InvoicesService();
+        $pdf = $service->generate(Order::find($this->orderId))->save();
+
+        $test = TelegramFile::create()
             ->to($this->user->telegram_user_id)
             ->content(
                 "Привет, твой заказ № '$this->orderId' оформлен. \n" .
                 "И находиться в статус 'In Process'. \n" .
                 "Детальней о заказе на странице заказа в аккаунте."
             )
+            ->document('https://xl-static.rozetka.com.ua/assets/img/design/logo_n.svg', 'test.svg')
             ->button('Order details', route('account.orders.show', $this->orderId));
+        logs()->info($test->jsonSerialize());
+        logs()->info('END::toTelegram');
+        return $test;
     }
 
     /**
