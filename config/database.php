@@ -133,7 +133,6 @@ return [
             'url' => env('REDIS_URL'),
             'host' => $REDIS_URL['host'] || '',
             'port' => $REDIS_URL['port'] || '',
-            'database' => ltrim($REDIS_URL['path'], '/') || '',
             'password' => $REDIS_URL['pass'] || '',
         ],
 
@@ -141,7 +140,6 @@ return [
             'url' => env('REDIS_URL'),
             'host' => $REDIS_URL['host'] || '',
             'port' => $REDIS_URL['port'] || '',
-            'database' => ltrim($REDIS_URL['path'], '/') || '',
             'password' => $REDIS_URL['pass'] || '',
         ],
 
