@@ -3,6 +3,7 @@
 use Illuminate\Support\Str;
 
 $DATABASE_URL = parse_url(env('DATABASE_URL', ''));
+$REDIS_URL = parse_url(env('REDIS_URL', ''));
 
 return [
 
@@ -130,18 +131,18 @@ return [
 
         'default' => [
             'url' => env('REDIS_URL'),
-            'host' => env('REDIS_HOST', '127.0.0.1'),
-            'password' => env('REDIS_PASSWORD', null),
-            'port' => env('REDIS_PORT', '6379'),
-            'database' => env('REDIS_DB', '0'),
+            'host' => $REDIS_URL['host'] || '',
+            'port' => $REDIS_URL['port'] || '',
+            'database' => ltrim($REDIS_URL['path'], '/') || '',
+            'password' => $REDIS_URL['pass'] || '',
         ],
 
         'cache' => [
             'url' => env('REDIS_URL'),
-            'host' => env('REDIS_HOST', '127.0.0.1'),
-            'password' => env('REDIS_PASSWORD', null),
-            'port' => env('REDIS_PORT', '6379'),
-            'database' => env('REDIS_CACHE_DB', '1'),
+            'host' => $REDIS_URL['host'] || '',
+            'port' => $REDIS_URL['port'] || '',
+            'database' => ltrim($REDIS_URL['path'], '/') || '',
+            'password' => $REDIS_URL['pass'] || '',
         ],
 
     ],
