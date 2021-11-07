@@ -55,7 +55,7 @@ paypal.Buttons({
         });
 
         return $.ajax({
-            url: '/paypal/order/create/',
+            url: 'https://hillel-shop.herokuapp.com/paypal/order/create/',
             type: 'POST',
             dataType: 'json',
             data: JSON.stringify(fields),
@@ -86,7 +86,7 @@ paypal.Buttons({
     // Call your server to finalize the transaction
     onApprove: function (data, actions) {
         if(data.hasOwnProperty('orderID')) {
-            return fetch('/paypal/order/' + data.orderID + '/capture/', {
+            return fetch('https://hillel-shop.herokuapp.com/paypal/order/' + data.orderID + '/capture/', {
                 method: 'post',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
