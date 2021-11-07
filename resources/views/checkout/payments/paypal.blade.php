@@ -5,4 +5,4 @@
 <script
     src="https://www.paypal.com/sdk/js?client-id={{ config('paypal.' . env('PAYPAL_MODE') . '.client_id') }}&currency=USD"
 ></script>
-<script src="{{ asset('js/paypal-payments.js') }}" type="text/javascript"></script>
+<script src="{{ secure_asset('js/paypal-payments.js') }}" type="text/javascript"></script>

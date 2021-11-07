@@ -3,7 +3,7 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="navbar-brand" href="{{ url('admin') }}">Admin panel:</a>
+                    <a class="navbar-brand" href="{{ secure_url('admin') }}">Admin panel:</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">

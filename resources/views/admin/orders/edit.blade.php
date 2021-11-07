@@ -29,7 +29,7 @@
                         </div>
                     </div>
                 </form>
-                <a href="{{ url()->previous() }}" class="btn btn-info">Back</a>
+                <a href="{{ secure_url()->previous() }}" class="btn btn-info">Back</a>
             </div>
             <div class="col-md-5">
                 @include('admin.orders.parts.summary_table', ['products' => $products])

@@ -172,5 +172,5 @@
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
-    <script src="{{ asset('js/product-images.js') }}" type="text/javascript"></script>
+    <script src="{{ secure_asset('js/product-images.js') }}" type="text/javascript"></script>
 @endsection
