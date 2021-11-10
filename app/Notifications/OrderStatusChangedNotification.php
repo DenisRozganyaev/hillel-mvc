@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use App\Models\Order;
+use App\Services\AwsPublicLink;
 use App\Services\InvoicesService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -60,10 +61,12 @@ class OrderStatusChangedNotification extends Notification implements ShouldQueue
         $service = new InvoicesService();
         $pdf = $service->generate(Order::find($this->order->id))->save('s3');
 
+        $fileLink = AwsPublicLink::generate($pdf->filename);
+
         return TelegramMessage::create()
             ->to($this->order->user->telegram_user_id)
             ->content(
-                $pdf->url() . "\n" .
+                $fileLink . "\n" .
                 "Привет, статус твоего заказа №" . $this->order->id . " был измене на \n" .
                 "{$this->order->status->name}"
             )

@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Order;
+use App\Services\AwsPublicLink;
 use App\Services\InvoicesService;
 use Illuminate\Support\Facades\Route;
 use LaravelDaily\Invoices\Classes\Buyer;
@@ -19,13 +20,8 @@ use LaravelDaily\Invoices\Facades\Invoice;
 */
 
 Route::get('test', function() {
-    $service = new InvoicesService();
-    $pdf = $service->generate(Order::find(33))->save();
 
-    $file = $pdf->url();
-
-//    $order->user()->notify();
-    dd($file);
+    $aws = AwsPublicLink::generate('file.pdf');
 });
 
 Auth::routes();

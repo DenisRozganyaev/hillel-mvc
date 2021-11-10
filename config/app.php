@@ -181,6 +181,7 @@ return [
         Kyslik\ColumnSortable\ColumnSortableServiceProvider::class,
         LaraIzitoast\LaraIzitoastServiceProvider::class,
         App\Providers\InvoicesServiceProvider::class,
+        App\Providers\AwsPublicLinkProvider::class,
     ],
 
     /*
