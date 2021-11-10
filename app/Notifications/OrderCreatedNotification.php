@@ -59,16 +59,15 @@ class OrderCreatedNotification extends Notification
     {
         logs()->info('INIT::toTelegram');
         $service = new InvoicesService();
-        $pdf = $service->generate(Order::find($this->orderId))->save();
+        $pdf = $service->generate(Order::find($this->orderId))->save('s3');
 
-        $test = TelegramFile::create()
+        $test = TelegramMessage::create()
             ->to($this->user->telegram_user_id)
             ->content(
                 "Привет, твой заказ № '$this->orderId' оформлен. \n" .
                 "И находиться в статус 'In Process'. \n" .
                 "Детальней о заказе на странице заказа в аккаунте."
             )
-            ->document('https://xl-static.rozetka.com.ua/assets/img/design/logo_n.svg', 'test.svg')
             ->button('Order details', route('account.orders.show', $this->orderId));
         logs()->info($test->jsonSerialize());
         logs()->info('END::toTelegram');

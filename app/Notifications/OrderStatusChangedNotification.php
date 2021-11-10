@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use App\Models\Order;
+use App\Services\InvoicesService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -56,10 +57,14 @@ class OrderStatusChangedNotification extends Notification implements ShouldQueue
 
     public function toTelegram($notifiable)
     {
+        $service = new InvoicesService();
+        $pdf = $service->generate(Order::find($this->order->id))->save('s3');
+
         return TelegramMessage::create()
             ->to($this->order->user->telegram_user_id)
             ->content(
-                "Привет, статус твоего заказа №" . $this->order->id . " был измене на. \n" .
+                $pdf->url() . "\n" .
+                "Привет, статус твоего заказа №" . $this->order->id . " был измене на \n" .
                 "{$this->order->status->name}"
             )
             ->button('Order details', route('account.orders.show', $this->order));
