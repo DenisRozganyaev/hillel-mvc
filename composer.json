@@ -26,7 +26,8 @@
         "predis/predis": "^1.1",
         "pschocke/laravel-telegram-login-widget": "^1.2",
         "srmklive/paypal": "~3.0",
-        "willvincent/laravel-rateable": "^2.3.0"
+        "willvincent/laravel-rateable": "^2.3.0",
+        "ext-intl" : "*"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.10",
