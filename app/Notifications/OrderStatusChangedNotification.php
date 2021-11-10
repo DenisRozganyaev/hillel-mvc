@@ -36,7 +36,7 @@ class OrderStatusChangedNotification extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return !is_admin($this->order->user) && !empty($this->order->user->telegram_user_id)
+        return !empty($this->order->user->telegram_user_id)
             ? ['mail', 'telegram']
             : ['mail'];
     }

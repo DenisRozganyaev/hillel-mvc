@@ -38,9 +38,9 @@ class OrderCreatedNotification extends Notification
      */
     public function via($notifiable)
     {
-        return !is_admin($this->user) && !empty($this->user->telegram_user_id)
-            ? ['telegram']
-            : [];
+        return !empty($this->user->telegram_user_id)
+            ? ['telegram', 'mail']
+            : ['mail'];
     }
 
     /**
