@@ -18,12 +18,6 @@ use LaravelDaily\Invoices\Facades\Invoice;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('test', function() {
-
-    $aws = AwsPublicLink::generate('file.pdf');
-});
-
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');

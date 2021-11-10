@@ -58,19 +58,12 @@ class OrderStatusChangedNotification extends Notification implements ShouldQueue
 
     public function toTelegram($notifiable)
     {
-        $service = new InvoicesService();
-        $pdf = $service->generate(Order::find($this->order->id))->save('s3');
-
-        $fileLink = AwsPublicLink::generate($pdf->filename);
-
         return TelegramMessage::create()
             ->to($this->order->user->telegram_user_id)
             ->content(
-                $fileLink . "\n" .
                 "Привет, статус твоего заказа №" . $this->order->id . " был измене на \n" .
                 "{$this->order->status->name}"
             )
-            ->options(['parse_mode' => ''])
             ->button('Order details', route('account.orders.show', $this->order));
     }
 }

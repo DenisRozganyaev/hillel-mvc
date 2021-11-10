@@ -5,6 +5,7 @@ namespace App\Notifications;
 use App\Mail\Orders\Created\Admin;
 use App\Mail\Orders\Created\Customer;
 use App\Models\Order;
+use App\Services\AwsPublicLink;
 use App\Services\InvoicesService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -60,14 +61,17 @@ class OrderCreatedNotification extends Notification
         logs()->info('INIT::toTelegram');
         $service = new InvoicesService();
         $pdf = $service->generate(Order::find($this->orderId))->save('s3');
+        $fileLink = AwsPublicLink::generate($pdf->filename);
 
-        $test = TelegramMessage::create()
+        $test = TelegramFile::create()
             ->to($this->user->telegram_user_id)
             ->content(
                 "Привет, твой заказ № '$this->orderId' оформлен. \n" .
                 "И находиться в статус 'In Process'. \n" .
                 "Детальней о заказе на странице заказа в аккаунте."
             )
+            ->options(['parse_mode' => ''])
+            ->document($fileLink, $pdf->filename)
             ->button('Order details', route('account.orders.show', $this->orderId));
         logs()->info($test->jsonSerialize());
         logs()->info('END::toTelegram');
