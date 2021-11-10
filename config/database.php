@@ -69,11 +69,11 @@ return [
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),
-            'host' => $DATABASE_URL['host'] || '',
-            'port' => $DATABASE_URL['port'] || '',
-            'database' => ltrim($DATABASE_URL['path'], '/') || '',
-            'username' => $DATABASE_URL['user'] || '',
-            'password' => $DATABASE_URL['pass'] || '',
+            'host' => (!empty($DATABASE_URL['host']) ? $DATABASE_URL['host'] : ''),
+            'port' => (!empty($DATABASE_URL['port']) ? $DATABASE_URL['port'] : ''),
+            'database' => (!empty($DATABASE_URL['path']) ? ltrim($DATABASE_URL['path'], '/') : ''),
+            'username' => (!empty($DATABASE_URL['user']) ? $DATABASE_URL['user'] : ''),
+            'password' => (!empty($DATABASE_URL['pass']) ? $DATABASE_URL['pass'] : ''),
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
@@ -131,16 +131,16 @@ return [
 
         'default' => [
             'url' => env('REDIS_URL'),
-            'host' => $REDIS_URL['host'] || '',
-            'port' => $REDIS_URL['port'] || '',
-            'password' => $REDIS_URL['pass'] || '',
+            'host' => (!empty($REDIS_URL['pass']) ? $REDIS_URL['host'] : ''),
+            'port' => (!empty($REDIS_URL['pass']) ? $REDIS_URL['port'] : ''),
+            'password' => (!empty($REDIS_URL['pass']) ? $REDIS_URL['pass'] : ''),
         ],
 
         'cache' => [
             'url' => env('REDIS_URL'),
-            'host' => $REDIS_URL['host'] || '',
-            'port' => $REDIS_URL['port'] || '',
-            'password' => $REDIS_URL['pass'] || '',
+            'host' => (!empty($REDIS_URL['pass']) ? $REDIS_URL['host'] : ''),
+            'port' => (!empty($REDIS_URL['pass']) ? $REDIS_URL['port'] : ''),
+            'password' => (!empty($REDIS_URL['pass']) ? $REDIS_URL['pass'] : ''),
         ],
 
     ],

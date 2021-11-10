@@ -55,7 +55,7 @@ paypal.Buttons({
         });
 
         return $.ajax({
-            url: 'https://hillel-shop.herokuapp.com/paypal/order/create/',
+            url: '/paypal/order/create',
             type: 'POST',
             dataType: 'json',
             data: JSON.stringify(fields),
@@ -65,14 +65,16 @@ paypal.Buttons({
             },
             error: function(data) {
                 const responseJson = data.responseJSON;
-                let errorTemplate = `<span class="invalid-feedback" role="alert">
+                if (typeof responseJson !== 'undefined') {
+                    let errorTemplate = `<span class="invalid-feedback" role="alert">
                                         <strong>___</strong>
                                     </span>`;
 
-                for(let [field, message] of Object.entries(responseJson.errors)) {
-                    let $input = $(`input[name="${field}"]`);
-                    $input.addClass(errorClass);
-                    $input.after(errorTemplate.replace('___', message[0]));
+                    for (let [field, message] of Object.entries(responseJson.errors)) {
+                        let $input = $(`input[name="${field}"]`);
+                        $input.addClass(errorClass);
+                        $input.after(errorTemplate.replace('___', message[0]));
+                    }
                 }
             }
         }).then(function(order) {
@@ -86,7 +88,7 @@ paypal.Buttons({
     // Call your server to finalize the transaction
     onApprove: function (data, actions) {
         if(data.hasOwnProperty('orderID')) {
-            return fetch('https://hillel-shop.herokuapp.com/paypal/order/' + data.orderID + '/capture/', {
+            return fetch('/paypal/order/' + data.orderID + '/capture', {
                 method: 'post',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
