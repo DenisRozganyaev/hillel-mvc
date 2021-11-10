@@ -67,6 +67,7 @@ class OrderStatusChangedNotification extends Notification implements ShouldQueue
                 "Привет, статус твоего заказа №" . $this->order->id . " был измене на \n" .
                 "{$this->order->status->name}"
             )
+            ->options(['parse_mode' => ''])
             ->button('Order details', route('account.orders.show', $this->order));
     }
 }
