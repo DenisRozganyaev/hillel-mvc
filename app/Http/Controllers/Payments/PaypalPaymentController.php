@@ -10,6 +10,7 @@ use App\Repositories\Contracts\OrderRepositoryInterface;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PHPUnit\Exception;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
 class PaypalPaymentController extends Controller
@@ -27,25 +28,29 @@ class PaypalPaymentController extends Controller
 
     public function create(CreateOrderRequest $request, OrderRepositoryInterface $orderRepository)
     {
-        $total = Cart::instance('cart')->total(2, '.', '');
+        try {
+            $total = Cart::instance('cart')->total(2, '.', '');
 
-        $paypalOrder = $this->paypalClient->createOrder([
-           'intent' => 'CAPTURE',
-           'purchase_units' => [
-               [
-                   'amount' => [
-                       'currency_code' => 'USD',
-                       'value' => $total
+            $paypalOrder = $this->paypalClient->createOrder([
+               'intent' => 'CAPTURE',
+               'purchase_units' => [
+                   [
+                       'amount' => [
+                           'currency_code' => 'USD',
+                           'value' => $total
+                       ]
                    ]
                ]
-           ]
-        ]);
-        $request = $request->validated();
-        $request['vendor_order_id'] = $paypalOrder['id'];
+            ]);
+            $request = $request->validated();
+            $request['vendor_order_id'] = $paypalOrder['id'];
 
-        $order = $orderRepository->create($request);
+            $order = $orderRepository->create($request);
 
-        return response()->json($order);
+            return response()->json($order);
+        } catch (Exception $e) {
+            dd($e);
+        }
     }
 
     public function capture(string $orderId, OrderRepositoryInterface $orderRepository)

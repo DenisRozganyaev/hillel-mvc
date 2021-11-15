@@ -27,6 +27,7 @@ class OrderStatusChangedNotification extends Notification implements ShouldQueue
      */
     public function __construct(Order $order)
     {
+        logs()->debug('INIT DEBUG');
         $this->order = $order;
     }
 
@@ -38,8 +39,12 @@ class OrderStatusChangedNotification extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
+        logs()->debug('INIT via => ' . (!empty($this->order->user->telegram_user_id)
+                ? 'mail'
+                : 'mail'));
+
         return !empty($this->order->user->telegram_user_id)
-            ? ['mail', 'telegram']
+            ? ['mail']
             : ['mail'];
     }
 
@@ -50,6 +55,7 @@ class OrderStatusChangedNotification extends Notification implements ShouldQueue
      */
     public function toMail()
     {
+        logs()->debug('INIT toMail');
         return (new MailMessage)
                     ->line("Dear {$this->order->name} {$this->order->surname},")
                     ->line("Your order #{$this->order->id} status was changed to {$this->order->status->name}")

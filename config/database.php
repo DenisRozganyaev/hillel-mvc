@@ -69,11 +69,11 @@ return [
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),
-            'host' => (!empty($DATABASE_URL['host']) ? $DATABASE_URL['host'] : ''),
-            'port' => (!empty($DATABASE_URL['port']) ? $DATABASE_URL['port'] : ''),
-            'database' => (!empty($DATABASE_URL['path']) ? ltrim($DATABASE_URL['path'], '/') : ''),
-            'username' => (!empty($DATABASE_URL['user']) ? $DATABASE_URL['user'] : ''),
-            'password' => (!empty($DATABASE_URL['pass']) ? $DATABASE_URL['pass'] : ''),
+            'host' => (!empty($DATABASE_URL['host']) ? $DATABASE_URL['host'] : env('DB_HOST', '127.0.0.1')),
+            'port' => (!empty($DATABASE_URL['port']) ? $DATABASE_URL['port'] : env('DB_PORT', '5432')),
+            'database' => (!empty($DATABASE_URL['path']) ? ltrim($DATABASE_URL['path'], '/') : env('DB_DATABASE', 'forge')),
+            'username' => (!empty($DATABASE_URL['user']) ? $DATABASE_URL['user'] : env('DB_USERNAME', 'forge')),
+            'password' => (!empty($DATABASE_URL['pass']) ? $DATABASE_URL['pass'] : env('DB_PASSWORD', '')),
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
@@ -131,9 +131,9 @@ return [
 
         'default' => [
             'url' => env('REDIS_URL'),
-            'host' => (!empty($REDIS_URL['pass']) ? $REDIS_URL['host'] : ''),
-            'port' => (!empty($REDIS_URL['pass']) ? $REDIS_URL['port'] : ''),
-            'password' => (!empty($REDIS_URL['pass']) ? $REDIS_URL['pass'] : ''),
+            'host' => (!empty($REDIS_URL['pass']) ? $REDIS_URL['host'] : env('REDIS_HOST', '')),
+            'port' => (!empty($REDIS_URL['pass']) ? $REDIS_URL['port'] : env('REDIS_PORT', '')),
+            'password' => (!empty($REDIS_URL['pass']) ? $REDIS_URL['pass'] : env('REDIS_PASSWORD', '')),
         ],
 
         'cache' => [
