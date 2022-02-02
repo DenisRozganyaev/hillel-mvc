@@ -1,15 +1,13 @@
 <?php
-return [
-    'db' => [
-        'roles' => [
-            'admin' => 'Admin',
-            'customer' => 'Customer'
-        ],
-        'order_status' => [
-            'in_process' => 'In process',
-            'paid' => 'Paid',
-            'completed' => 'Completed',
-            'canceled' => 'Canceled'
-        ]
-    ]
-];
+
+define('BASE_DIR', dirname(__DIR__));
+define('CONTROLLERS_NAMESPACE', 'App\Controllers\\');
+
+/**
+ * DB constants
+ */
+
+define('DB_HOST', '127.0.0.1');
+define('DB_NAME', 'blog_db');
+define('DB_USER', 'root');
+define('DB_PASSWORD', 'root');
