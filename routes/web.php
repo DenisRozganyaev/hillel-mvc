@@ -9,3 +9,6 @@ $router->add('posts/{id:\d+}', ['controller' => 'PostsController', 'action' => '
 $router->add('posts/{id:\d+}/update', ['controller' => 'PostsController', 'action' => 'update', 'method' => 'POST']);
 
 $router->add('login', ['controller' => 'AuthController', 'action' => 'login', 'method' => 'GET']);
+$router->add('registration', ['controller' => 'AuthController', 'action' => 'register', 'method' => 'GET']);
+
+$router->add('user/store', ['controller' => 'UsersController', 'action' => 'store', 'method' => 'POST']);

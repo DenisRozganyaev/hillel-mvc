@@ -3,17 +3,13 @@
 namespace App\Controllers;
 
 use App\Models\Post;
+use Core\Controller;
 
-class PostsController
+class PostsController extends Controller
 {
 
-    public function index()
+    protected function index()
     {
-        $post = Post::find(8);
-
-        $post = $post->update(['title' => 'Hillel 2']);
-
-        dd($post);
     }
 
     #  GET posts/ - index
@@ -24,10 +20,7 @@ class PostsController
     #  POST posts/:id - update
     #  POST posts/:id/destroy - delete/destroy(+)
 
-    public function show(int $id)
+    protected function show(int $id)
     {
-        $post = Post::find($id);
-
-        dd($post);
     }
 }

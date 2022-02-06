@@ -8,6 +8,8 @@ class Model
 {
     static protected string $tableName = '';
 
+    static protected $query = "";
+
     use DataBaseTrait;
 
     public static function all()
@@ -45,8 +47,6 @@ class Model
 
     public function update(array $data)
     {
-        $vars = static::preparedQueryVars($data);
-
         $query = "UPDATE " . static::$tableName . ' SET ';
 
         $ps = [];
@@ -70,6 +70,38 @@ class Model
         return static::find($this->id);
     }
 
+    public static function delete(int $id)
+    {
+        $query = 'DELETE FROM ' . static::$tableName . ' WHERE id = :id';
+
+        $stmt = static::db()->prepare($query);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+
+        return $stmt->execute();
+    }
+
+    public static function select(array $keys = ['*']): Model
+    {
+        static::$query = "";
+        static::$query = "SELECT " . implode(',', $keys) . " FROM " . static::$tableName . " ";
+
+        return new static();
+    }
+
+    public function where(array $conditions)
+    {
+        $condition = $conditions[2];
+        unset($conditions[2]);
+
+        static::$query .=  'WHERE ' . implode(' ', $conditions) . ' :condition';
+
+        $stmt = static::db()->prepare(static::$query);
+        $stmt->bindValue(':condition', $condition);
+
+        $stmt->execute();
+
+        return $stmt->fetchObject(static::class);
+    }
 
     protected static function preparedQueryVars($data): array
     {

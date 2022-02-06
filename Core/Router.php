@@ -48,13 +48,14 @@ class Router
 
                 if (method_exists($controller, $action)) {
                     $controller = new $controller;
-                    call_user_func_array(
-                        [
-                            $controller,
-                            $action
-                        ],
-                        $this->params
-                    );
+                    $controller->$action($this->params);
+//                    call_user_func_array(
+//                        [
+//                            $controller,
+//                            $action
+//                        ],
+//                        $this->params
+//                    );
                 } else {
                     throw new \Exception("Method '{$action}' doesn't exists in {$controller} not found");
                 }

@@ -1,5 +1,6 @@
 <?php
 include_once dirname(__DIR__) . '/config/constants.php';
+include_once dirname(__DIR__) . '/config/functions.php';
 include_once BASE_DIR . '/vendor/autoload.php';
 
 error_reporting(E_ALL);
