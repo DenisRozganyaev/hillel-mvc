@@ -7,4 +7,3 @@ echo 'April';
 echo 'April';
 echo 'April';
 echo 'April';
-echo 'April';
