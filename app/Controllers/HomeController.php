@@ -12,7 +12,6 @@ class HomeController extends Controller
     protected function index()
     {
         $user = User::select(['first_name']);
-        dd($user->where(['email', '=', 'test@test.com']));
         View::render('home/index');
     }
 
